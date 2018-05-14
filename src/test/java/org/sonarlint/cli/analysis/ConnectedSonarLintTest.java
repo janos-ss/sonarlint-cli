@@ -81,8 +81,8 @@ public class ConnectedSonarLintTest {
     when(engine.allModulesByKey()).thenReturn(getModulesByKey("project1"));
     sonarLint.start(true);
 
-    verify(engine).update(any(ServerConfiguration.class));
-    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"));
+    verify(engine).update(any(ServerConfiguration.class), any());
+    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"), any());
   }
 
   @Test
@@ -90,8 +90,8 @@ public class ConnectedSonarLintTest {
     when(engine.allModulesByKey()).thenReturn(getModulesByKey("project1"));
     sonarLint.start(false);
 
-    verify(engine).update(any(ServerConfiguration.class));
-    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"));
+    verify(engine).update(any(ServerConfiguration.class), any());
+    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"), any());
   }
 
   @Test
@@ -102,8 +102,8 @@ public class ConnectedSonarLintTest {
     when(engine.getGlobalStorageStatus()).thenReturn(status);
     sonarLint.start(false);
 
-    verify(engine).update(any(ServerConfiguration.class));
-    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"));
+    verify(engine).update(any(ServerConfiguration.class), any());
+    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"), any());
   }
 
   @Test
@@ -114,7 +114,7 @@ public class ConnectedSonarLintTest {
     when(engine.getGlobalStorageStatus()).thenReturn(status);
     sonarLint.start(false);
 
-    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"));
+    verify(engine).updateModule(any(ServerConfiguration.class), eq("project1"), any());
     verify(engine).allModulesByKey();
     verify(engine).getGlobalStorageStatus();
     verify(engine).getModuleStorageStatus("project1");
@@ -188,7 +188,7 @@ public class ConnectedSonarLintTest {
     verify(engine).allModulesByKey();
     verify(engine).getGlobalStorageStatus();
     verify(engine).getModuleStorageStatus(moduleKey);
-    verify(engine).updateModule(any(), eq(moduleKey));
+    verify(engine).updateModule(any(), eq(moduleKey), any());
     verifyNoMoreInteractions(engine);
   }
 

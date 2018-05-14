@@ -164,5 +164,10 @@ public class InputFileFinder {
     public String contents() throws IOException {
       return new String(Files.readAllBytes(path), charset);
     }
+
+    @Override
+    public String relativePath() {
+      return path.toString();
+    }
   }
 }
