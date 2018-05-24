@@ -43,7 +43,6 @@ import org.sonarsource.sonarlint.core.client.api.connected.ModuleStorageStatus;
 import org.sonarsource.sonarlint.core.client.api.connected.ServerConfiguration;
 import org.sonarsource.sonarlint.core.tracking.CachingIssueTracker;
 import org.sonarsource.sonarlint.core.tracking.CachingIssueTrackerImpl;
-import org.sonarsource.sonarlint.core.tracking.Console;
 import org.sonarsource.sonarlint.core.tracking.InMemoryIssueTrackerCache;
 import org.sonarsource.sonarlint.core.tracking.IssueTrackable;
 import org.sonarsource.sonarlint.core.tracking.IssueTrackerCache;
@@ -153,7 +152,7 @@ public class ConnectedSonarLint extends SonarLint {
     IssueTrackerCache cache = new InMemoryIssueTrackerCache();
     CachingIssueTracker issueTracker = new CachingIssueTrackerImpl(cache);
     trackablesPerFile.entrySet().forEach(entry -> issueTracker.matchAndTrackAsNew(entry.getKey(), entry.getValue()));
-    ServerIssueTracker serverIssueTracker = new ServerIssueTracker(new MyLogger(), new MyConsole(), issueTracker);
+    ServerIssueTracker serverIssueTracker = new ServerIssueTracker(new MyLogger(), issueTracker);
     serverIssueTracker.update(engine, moduleKey, relativePaths);
     return cache;
   }
@@ -213,16 +212,6 @@ public class ConnectedSonarLint extends SonarLint {
 
     @Override public void debug(String message) {
       LOGGER.debug(message);
-    }
-  }
-
-  private static class MyConsole implements Console {
-    @Override public void info(String message) {
-      LOGGER.info(message);
-    }
-
-    @Override public void error(String message, Throwable t) {
-      LOGGER.error(message, t);
     }
   }
 }
